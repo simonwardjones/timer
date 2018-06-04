@@ -1,4 +1,4 @@
-""" 
+"""
 Section:
     time
 
@@ -10,23 +10,32 @@ Description:
 """
 import time
 
+
 class Timer:
+
     def __init__(self):
-        self.start = time.time()
-        self.end = time.time()
+        self.start_time = time.time()
+        self.end_time = time.time()
         self._is_running = False
 
     def start_timer(self):
-        """restarts the time
+        """starts/restarts the time
         """
         self.start = time.time()
         self._is_running = True
 
+    def start(self):
+        """starts/restarts the time
+        """
+        self.start = time.time()
+        self._is_running = True
 
     def reset(self):
         """reset the time
         """
-        self.end = self.start = time.time()
+        self.start_time = time.time()
+        self.end_time = time.time()
+        self._is_running = False
 
     def stop(self):
         """stop the current time
@@ -35,15 +44,17 @@ class Timer:
             self.end = time.time()
         else:
             print("Can't Stop until you start")
+        self._is_running = False
 
     def get_time(self):
         '''
-        Returns the time elapsed (Stops the counter).
+        Returns the time elapsed (Stops the counter if running).
 
         Returns:
             TYPE: string
         '''
-        self.stop()
+        if self._is_running:
+            self.stop()
         return self.end - self.start
 
     def get_elapsed(self):
@@ -55,12 +66,12 @@ class Timer:
         '''
         return time.time() - self.start
 
-    def get_time_hhmmss(self,duration):
+    def get_time_hhmmss(self, duration):
         """Returns the duration in HH:mm:ss (Does not reset the counter).
-        
+
         Returns:
             TYPE: Description
         """
-        m, s = divmod(duration, 60) 
+        m, s = divmod(duration, 60)
         h, m = divmod(m, 60)
         return f'{int(h):0>2}:{int(m):0>2}:{s:05.4f}'

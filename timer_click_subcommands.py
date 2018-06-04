@@ -1,7 +1,7 @@
 """
 Count Down timer command line Tool
 """
-import os 
+import os
 import sys
 from time import sleep
 import time
@@ -16,7 +16,7 @@ def cli():
 
 
 @cli.command(help="Countdown timer with argument seconds")
-@click.argument('seconds',type=int)
+@click.argument('seconds', type=int)
 def countdown(seconds=None):
     """Time to countdown in seconds"""
     timer = Timer()
@@ -25,18 +25,19 @@ def countdown(seconds=None):
     try:
         while timer.get_elapsed() < seconds:
             if timer.get_elapsed() < 2:
-                print("And They are off!!  " + timer.get_time_hhmmss(seconds - timer.get_elapsed()), end= '\r',flush=True)
-            elif clean==0:
-                print("                                 ",end='\r')
+                print("And They are off!!  " + timer.get_time_hhmmss(seconds -
+                                                                     timer.get_elapsed()), end='\r', flush=True)
+            elif clean == 0:
+                print("                                 ", end='\r')
                 clean = 1
             else:
-                print(timer.get_time_hhmmss(seconds - timer.get_elapsed()), end= '\r',flush=True)
+                print(timer.get_time_hhmmss(
+                    seconds - timer.get_elapsed()), end='\r', flush=True)
     except KeyboardInterrupt:
         timer.stop()
-        print("                                 ",end='\r')
+        print("                                 ", end='\r')
         print(timer.get_time_hhmmss(timer.get_time()))
         sys.exit()
-
 
 
 @cli.command(help="Stopwatch timer, stop with ctrl+c")
@@ -48,18 +49,19 @@ def stopwacth():
     try:
         while timer._is_running:
             if timer.get_elapsed() < 2:
-                print("And They are off!!  " + timer.get_time_hhmmss(timer.get_elapsed()), end= '\r',flush=True)
-            elif clean==0:
-                print("                                 ",end='\r')
+                print("And They are off!!  " +
+                      timer.get_time_hhmmss(timer.get_elapsed()), end='\r', flush=True)
+            elif clean == 0:
+                print("                                 ", end='\r')
                 clean = 1
             else:
-                print(timer.get_time_hhmmss(timer.get_elapsed()), end= '\r',flush=True)
+                print(timer.get_time_hhmmss(
+                    timer.get_elapsed()), end='\r', flush=True)
     except KeyboardInterrupt:
         timer.stop()
-        print("                                 ",end='\r')
+        print("                                 ", end='\r')
         print(timer.get_time_hhmmss(timer.get_time()))
         sys.exit()
-
 
 
 class Timer:
@@ -73,7 +75,6 @@ class Timer:
         """
         self.start = time.time()
         self._is_running = True
-
 
     def restart(self):
         """restarts the time
@@ -106,13 +107,13 @@ class Timer:
         '''
         return time.time() - self.start
 
-    def get_time_hhmmss(self,duration):
+    def get_time_hhmmss(self, duration):
         """Returns the duration in HH:mm:ss (Does not reset the counter).
-        
+
         Returns:
             TYPE: Description
         """
-        m, s = divmod(duration, 60) 
+        m, s = divmod(duration, 60)
         h, m = divmod(m, 60)
         return f'{int(h):0>2}:{int(m):0>2}:{s:05.4f}'
 
